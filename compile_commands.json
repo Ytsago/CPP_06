@@ -1,0 +1,40 @@
+[
+ {
+  "directory": "/home/ytsago/Documents/42_school/CPP/CPP_06",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-MMD",
+   "-MP",
+   "-std=c++98",
+   "-I",
+   "inc/",
+   "-c",
+   "src/main.cpp",
+   "-o",
+   ".Obj/main.o"
+  ],
+  "file": "src/main.cpp"
+ },
+ {
+  "directory": "/home/ytsago/Documents/42_school/CPP/CPP_06",
+  "arguments": [
+   "c++",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-MMD",
+   "-MP",
+   "-std=c++98",
+   "-I",
+   "inc/",
+   "-c",
+   "src/class/ScalarConverter.cpp",
+   "-o",
+   ".Obj/class/ScalarConverter.o"
+  ],
+  "file": "src/class/ScalarConverter.cpp"
+ }
+]
