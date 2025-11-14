@@ -69,9 +69,12 @@ void	identify(Base& p) {
 
 int	main() {
 	std::srand(time(NULL));
-	Base* randBase = generate();
-	identify(randBase);
-	identify(*randBase);
-	delete randBase;
+	for (size_t i = 0; i < 50; i++) {
+		Base* randBase = generate();
+		identify(randBase);
+		identify(*randBase);
+		std::cout << std::endl;
+		delete randBase;
+	}
 	return 0;
 }
