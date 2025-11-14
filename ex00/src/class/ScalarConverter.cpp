@@ -2,6 +2,7 @@
 #include <sstream>
 #include <limits>
 
+
 ScalarConverter::ScalarConverter() {
 }
 
@@ -10,18 +11,17 @@ ScalarConverter::ScalarConverter(const ScalarConverter &other) {
 }
 
 ScalarConverter	&ScalarConverter::operator=(const ScalarConverter &other) {
-	if (this != &other)
-		return (*this);
+	(void) other;
 	return (*this);
 }
 
 ScalarConverter::~ScalarConverter() {
-	std::cout << "Destructor called" << std::endl;
 }
+
 
 template <typename T> void	printChar(std::ostream &out, T val) {
 	char c = val;
-	out << "Char: ";
+	out << "\nChar: ";
 	if (val < 0 || val > 127) {
 		out << "impossible\n";
 		return ;
@@ -42,36 +42,56 @@ template <typename T> void	printInt(std::ostream &out, T val) {
 		out << i << "\n";
 }
 
-template <typename T> void	printFloat(std::ostream &out, T val) {
+template <typename T> void	printFloat(std::ostream &out, T val, bool& flag) {
 	float	f = val;
 	out << "Float: ";
-	// if (val < std::numeric_limits<float>::min() || val > std::numeric_limits<float>::min())
-		// out << "impossible\n";
-	// else
-		out << f << "f\n";
+	out << f;
+	out << (flag ? ".0f\n" : "f\n");
 }
 
-template <typename T> void	printDouble(std::ostream &out, T val) {
+template <typename T> void	printDouble(std::ostream &out, T val, bool& flag) {
 	double	d = val;
 	out << "Double: ";
-	out << d << "\n";
+	out << d;
+	out << (flag ? ".0\n" : "\n");
 }
 
-template <typename T> void	printValue(T val) {
+template <typename T> void	printValue(T val, bool& flag) {
 	std::ostream&	out = std::cout;
+	if (val > 999999)
+		flag = false;
 	printChar(out, val);
 	printInt(out, val);
-	printFloat(out, val);
-	printDouble(out, val);
+	printFloat(out, val, flag);
+	printDouble(out, val, flag);
 	out << std::endl;
+}
+
+bool	isValidFloat(std::string in, std::stringstream& iss) {
+	std::string	left;
+	size_t	pos = in.find('.');
+	iss >> left;
+	if (pos != in.rfind('.'))
+		return 0;
+	if (iss.fail() || !iss.eof())
+		return 0;
+	if (left[0] != 'f' || pos == in.npos || left.size() > 1)
+		return 0;
+	return 1;
 }
 
 template <typename T> bool strConvert(std::string in, T *val) {
 	std::stringstream iss(in);
+	bool	doIHaveToWriteTheDot = true;
 	iss >> *val;
-	if (iss.fail() || (!iss.eof() && in[in.size() - 1] != 'f'))
+	if (iss.fail())
 		return 0;
-	printValue(*val);
+	if (!iss.eof() && !isValidFloat(in, iss))
+		return 0;
+	size_t pos = in.find('.');
+	if (pos != in.npos && (pos == 0 || std::isdigit(in[pos +1])))
+		doIHaveToWriteTheDot = false;
+	printValue(*val, doIHaveToWriteTheDot);
 	return 1;
 }
 
@@ -127,8 +147,9 @@ void	ScalarConverter::Convert(std::string input) {
 	if (printLiteral(input))
 		return ;
 	if (input.size() == 1 && std::isprint(input[0])) {
-		printValue(input[0]);
+		bool	dummy_flag = true;
+		printValue(input[0], dummy_flag);
 		return ;
 	}
-	std::cout << "Error\nInput can't be converted !" << std::endl;
+	std::cout << "Error\nInput can't be converted !\n" << std::endl;
 }
