@@ -17,7 +17,7 @@ OBJDIR = .Obj/
 
 MAIN =	main.cpp
 
-CLASS = Base.cpp A.cpp B.cpp C.cpp 
+CLASS = 
 
 INC =	Base.hpp A.hpp B.hpp C.hpp 
 
