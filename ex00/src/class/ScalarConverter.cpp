@@ -106,7 +106,7 @@ void	pseudoDouble(std::string in) {
 	std::ostream& out = std::cout;
 	printChar(out, -1);
 	out << "Int: impossible\n";
-	out << "Float: " << in + "f" << "\n" << "Double: " << in << std::endl;
+	out << "Float: " << in + "f" + "\n" + "Double: " + in << std::endl;
 }
 
 bool	printLiteral(std::string in) {
